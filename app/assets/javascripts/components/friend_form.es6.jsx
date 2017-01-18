@@ -30,16 +30,6 @@ var FriendForm = React.createClass({
     console.log(friendInfo)
   },
 
-  handleUpdate(item) {
-    $.ajax({
-      url: `/api/v1/gifts/${gift.id}`,
-      type: 'PUT',
-      data: { gift: gift },
-      success: () => { console.log('you did it!!!');
-      }
-    })
-  },
-
   render () {
     return (
       <div>
@@ -48,18 +38,18 @@ var FriendForm = React.createClass({
           <TextInput
             name="name"
             label="Name:"
-            type="name"
+            type="text"
             value={this.state.friendInfo.name}
             onChange={this.onChange}/>
 
           <TextInput
             name="birthday"
             label="Birthday:"
-            type="birthday"
+            type="text"
             value={this.state.friendInfo.birthday}
             onChange={this.onChange}/>
 
-          <AllGifts gifts={this.state.gifts} />
+          <AllGifts friendId={this.props.friendId} populated={this.props.populated} />
 
           <AddGift />
 
