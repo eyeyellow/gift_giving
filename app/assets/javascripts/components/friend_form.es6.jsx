@@ -1,55 +1,78 @@
-class FriendForm extends React.Component {
+var FriendForm = React.createClass({
 
-  constructor(props) {
-    super(props);
-    this.state = { friendInfo: {name: '', birthday: '', gifts: []} };
-    this.onChange = this.onChange.bind(this);
-    this.onSave = this.onSave.bind(this);
-  }
+  getInitialState() {
+    return { friendInfo: {name: '', birthday: '', gifts: []} }
+  },
+
+  componentDidMount() {
+    if(this.props.populated) {
+      var friendId = this.props.friendId
+      $.ajax({
+        url: `/api/v1/friends/${friendId}`,
+        type: 'GET',
+        success: (response) => {
+          this.setState({ friendInfo: response })
+        }
+      })
+    }
+  },
 
   onChange(event) {
     const field = event.target.name;
     const friendInfo = this.state.friendInfo;
     friendInfo[field] = event.target.value;
     return this.setState({friendInfo: friendInfo});
-  }
+  },
 
   onSave(event) {
     event.preventDefault();
     var friendInfo = this.state.friendInfo
     console.log(friendInfo)
-  }
+  },
+
+  handleUpdate(item) {
+    $.ajax({
+      url: `/api/v1/gifts/${gift.id}`,
+      type: 'PUT',
+      data: { gift: gift },
+      success: () => { console.log('you did it!!!');
+      }
+    })
+  },
 
   render () {
     return (
       <div>
         <h1>Fill out the fields to add a new friend:</h1>
         <form>
-            < TextInput
-              name="name"
-              label="name"
-              type="name"
-              value={this.state.friendInfo.name}
-              onChange={this.onChange}/>
+          <TextInput
+            name="name"
+            label="Name:"
+            type="name"
+            value={this.state.friendInfo.name}
+            onChange={this.onChange}/>
 
-            < TextInput
-              name="birthday"
-              label="birthday"
-              type="birthday"
-              value={this.state.friendInfo.birthday}
-              onChange={this.onChange}/>
+          <TextInput
+            name="birthday"
+            label="Birthday:"
+            type="birthday"
+            value={this.state.friendInfo.birthday}
+            onChange={this.onChange}/>
 
-            < input
-              type="submit"
-              onClick={this.onSave}/>
+          <AllGifts gifts={this.state.gifts} />
 
+          <AddGift />
+
+          <input
+            type="submit"
+            onClick={this.onSave}/>
       </form>
       </div>
     );
   }
-}
+})
 
 FriendForm.propTypes = {
   populated: React.PropTypes.bool,
-  data: React.PropTypes.object
+  friendId: React.PropTypes.number
 };

@@ -16,6 +16,9 @@ class FriendsController < ApplicationController
   end
 
   def edit
+    friend = Friend.find(params[:id])
+    @friend_id = friend.id
+    @friend_id.as_json
   end
 
 end
