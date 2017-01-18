@@ -10,6 +10,8 @@ class FriendsController < ApplicationController
 
   def show
     @friend = Friend.find(params[:id])
+    @gifts = Gift.where(friend_id: @friend.id)
+    @gifts.as_json
     @friend.as_json
   end
 
