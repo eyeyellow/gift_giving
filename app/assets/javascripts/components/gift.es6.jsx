@@ -36,6 +36,17 @@ var Gift = React.createClass({
     })
   },
 
+  handleDelete() {
+    var id = this.props.giftId
+    $.ajax({
+      url: `/api/v1/gifts/${id}`,
+      type: 'DELETE',
+      success: (gift) => {
+        this.props.handleDeleteGift(id);
+      }
+    })
+  },
+
   render () {
     if(this.state.editable) {
       return (
@@ -88,5 +99,6 @@ Gift.propTypes = {
   link: React.PropTypes.string,
   price: React.PropTypes.number,
   populated: React.PropTypes.bool,
-  giftId: React.PropTypes.number
+  giftId: React.PropTypes.number,
+  handleDeleteGift: React.PropTypes.func
 };

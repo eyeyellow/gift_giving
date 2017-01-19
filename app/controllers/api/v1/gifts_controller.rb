@@ -15,6 +15,10 @@ class Api::V1::GiftsController < Api::V1::BaseController
     respond_with gift, json: gift
   end
 
+  def destroy
+    respond_with Gift.destroy(params[:id])
+  end
+
   private
 
   def gift_params

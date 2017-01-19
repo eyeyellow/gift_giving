@@ -18,7 +18,16 @@ var AllGifts = React.createClass({
   },
 
   handleNewGift(newGiftData) {
-    console.log(newGiftData)
+    var newState = this.state.gifts.concat(newGiftData)
+    this.setState({ gifts: newState })
+  },
+
+  handleDeleteGift(giftId) {
+    var newGifts = this.state.gifts.filter((gift) => {
+      return gift.id !== giftId
+    });
+
+    this.setState({ gifts: newGifts });
   },
 
   render () {
@@ -33,14 +42,15 @@ var AllGifts = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {this.state.gifts.map(function(gift){
+            {this.state.gifts.map((gift) => {
               return (
                 <Gift key={gift.id}
                 editable={false}
                 giftId={gift.id}
                 name={gift.name}
                 link={gift.link}
-                price={gift.price} />
+                price={gift.price}
+                handleDeleteGift={this.handleDeleteGift} />
               )
             })}
           </tbody>

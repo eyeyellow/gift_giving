@@ -17,11 +17,10 @@ var AddGift = React.createClass({
       url: '../../api/v1/gifts/',
       type: 'POST',
       data: { gift: { name: name, price: price, link: link, friend_id: friend_id } },
-      success: (response) => {
-        console.log(response)
+      success: (gift) => {
+        this.props.handleNewGift(gift);
       }
     });
-    this.props.handleNewGift(this.state.newGiftData);
     this.toggleForm()
   },
 
