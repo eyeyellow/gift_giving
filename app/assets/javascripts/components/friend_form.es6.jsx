@@ -27,7 +27,15 @@ var FriendForm = React.createClass({
   onSave(event) {
     event.preventDefault();
     var friendInfo = this.state.friendInfo
-    console.log(friendInfo)
+    var friendId = this.props.friendId
+    $.ajax({
+      url: `/api/v1/friends/${friendId}`,
+      type: 'PUT',
+      data: { friendInfo: friendInfo },
+      success: (response) => {
+        window.location.href = `../../friends/${friendId}`
+      }
+    });
   },
 
   render () {
@@ -49,14 +57,19 @@ var FriendForm = React.createClass({
             value={this.state.friendInfo.birthday}
             onChange={this.onChange}/>
 
+          <input
+            type="submit"
+            onClick={this.onSave}/>
+
+        </form>
+        <br></br>
+        <br></br>
+        <h2>Gifts</h2>
+
           <AllGifts friendId={this.props.friendId} populated={this.props.populated} />
 
           <AddGift />
 
-          <input
-            type="submit"
-            onClick={this.onSave}/>
-      </form>
       </div>
     );
   }
