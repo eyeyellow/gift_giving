@@ -1,7 +1,7 @@
 var Gift = React.createClass({
 
   getInitialState() {
-    return { giftData: { name: '', price: 0, link: '' }, editable: false }
+    return { giftData: { name: '', price: 0, link: '' }, editable: this.props.editable }
   },
 
   componentDidMount() {
@@ -30,8 +30,8 @@ var Gift = React.createClass({
       type: 'PUT',
       data: { gift: gift },
       success: (gift) => {
-        this.setState({ giftData: { name: gift.name, price: gift.price, link: gift.link },
-          editable: !this.state.editable })
+        this.setState({ giftData: { name: gift.name, price: gift.price, link: gift.link } })
+        this.toggleEditable();
       }
     })
   },
