@@ -66,7 +66,8 @@ var FriendForm = React.createClass({
         <br></br>
         <h2>Gifts</h2>
 
-          <AllGifts friendId={this.props.friendId} populated={this.props.populated} />
+          <AllGifts friendId={this.props.friendId}
+            populated={this.props.populated} />
 
           <AddGift />
 
