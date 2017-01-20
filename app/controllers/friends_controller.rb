@@ -6,6 +6,7 @@ class FriendsController < ApplicationController
   end
 
   def new
+    @friend = Friend.new
   end
 
   def show

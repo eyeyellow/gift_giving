@@ -11,6 +11,10 @@ class Api::V1::FriendsController < Api::V1::BaseController
     respond_with params, json: params
   end
 
+  def create
+    respond_with :api, :v1, Friend.create(friend_params)
+  end
+
   private
 
   def friend_params
