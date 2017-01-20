@@ -6,13 +6,21 @@ class Api::V1::GiftsController < Api::V1::BaseController
   end
 
   def create
-    respond_with :api, :v1, Gift.create(gift_params)
+    @gift = Gift.new(gift_params)
+    if @gift.save
+      respond_with :api, :v1, @gift
+    else
+      render :json => { :errors => @gift.errors.full_messages }, :status => 422
+    end
   end
 
   def update
-    gift = Gift.find(params["id"])
-    gift.update_attributes(gift_params)
-    respond_with gift, json: gift
+    @gift = Gift.find(params["id"])
+    if @gift.update_attributes(gift_params)
+      respond_with @gift, json: @gift
+    else
+      render :json => { :errors => @gift.errors.full_messages }, :status => 422
+    end
   end
 
   def destroy

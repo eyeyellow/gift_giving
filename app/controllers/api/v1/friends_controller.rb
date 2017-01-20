@@ -15,7 +15,12 @@ class Api::V1::FriendsController < Api::V1::BaseController
   end
 
   def create
-    respond_with :api, :v1, Friend.create(friend_params)
+    @friend = Friend.new(friend_params)
+    if @friend.save
+      respond_with :api, :v1, @friend
+    else
+      render :json => { :errors => @friend.errors.full_messages }, :status => 422
+    end
   end
 
   private

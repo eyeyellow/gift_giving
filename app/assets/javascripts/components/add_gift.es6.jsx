@@ -1,7 +1,7 @@
 var AddGift = React.createClass({
 
   getInitialState() {
-    return { newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: false }
+    return { newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: false, errors: [] }
   },
 
   toggleForm() {
@@ -16,12 +16,17 @@ var AddGift = React.createClass({
     $.ajax({
       url: '../../api/v1/gifts/',
       type: 'POST',
-      data: { gift: { name: name, price: price, link: link, friend_id: friend_id } },
+      data: { gift: { name: name, price: price, link: link, friend_id: friend_id }, errors: [] },
       success: (gift) => {
         this.props.handleNewGift(gift);
+        this.setState({ newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, errors: [] })
+        this.toggleForm()
+      },
+      error: (xhr) => {
+        var errors = JSON.parse(xhr.responseText).errors
+        this.setState({ errors: errors })
       }
     });
-    this.toggleForm()
   },
 
   onChange(event) {
@@ -64,6 +69,11 @@ var AddGift = React.createClass({
       <div>
         <br></br>
         {this.state.showForm ? addGiftForm : <button onClick={this.toggleForm}>Add Gift</button> }
+        <ul>
+        {this.state.errors.map((error, index) => {
+          return <li style={{color: "red"}} key={index}>{error}</li>
+        })}
+        </ul>
       </div>
     );
   }

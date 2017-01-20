@@ -34,7 +34,7 @@ var FriendForm = React.createClass({
         data: { friendInfo: friendInfo },
         dataType: "json",
         success: (response) => {
-          this.setState({ messages: { friend: 'successfully changed friend info' } })
+          this.setState({ messages: { friend: 'successfully changed friend info' }, errors: [] })
         },
         error: (xhr) => {
           var errors = JSON.parse(xhr.responseText).errors
@@ -48,8 +48,11 @@ var FriendForm = React.createClass({
         type: 'POST',
         data: { friendInfo: friendInfo },
         success: (friendInfo) => {
-          console.log(friendInfo)
-          this.setState({ friendInfo: friendInfo, messages: { friend: 'successfully created new friend' }, action: 'update' })
+          this.setState({ friendInfo: friendInfo, messages: { friend: 'successfully created new friend' }, action: 'update', errors: [] })
+        },
+        error: (xhr) => {
+          var errors = JSON.parse(xhr.responseText).errors
+          this.setState({ errors: errors })
         }
       });
     }
@@ -83,7 +86,7 @@ var FriendForm = React.createClass({
         {this.state.messages.friend}
         <ul>
         {this.state.errors.map((error, index) => {
-          return <li key={index}>{error}</li>
+          return <li style={{color: "red"}} key={index}>{error}</li>
         })}
         </ul>
         <br></br>
