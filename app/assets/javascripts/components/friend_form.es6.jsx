@@ -1,7 +1,7 @@
 var FriendForm = React.createClass({
 
   getInitialState() {
-    return { friendInfo: {name: '', birthday: '', id: null}, action: 'create', messages: {friend: '', gift: ''} }
+    return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', messages: {friend: '', gift: ''} }
   },
 
   componentDidMount() {
