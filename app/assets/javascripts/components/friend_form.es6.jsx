@@ -1,7 +1,7 @@
 var FriendForm = React.createClass({
 
   getInitialState() {
-    return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', messages: {friend: '', gift: ''} }
+    return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', messages: {friend: ''}, errors: [] }
   },
 
   componentDidMount() {
@@ -32,8 +32,13 @@ var FriendForm = React.createClass({
         url: `/api/v1/friends/${friendId}`,
         type: 'PUT',
         data: { friendInfo: friendInfo },
-        success: (friend) => {
+        dataType: "json",
+        success: (response) => {
           this.setState({ messages: { friend: 'successfully changed friend info' } })
+        },
+        error: (xhr) => {
+          var errors = JSON.parse(xhr.responseText).errors
+          this.setState({ errors: errors })
         }
       });
     }
@@ -74,7 +79,13 @@ var FriendForm = React.createClass({
 
         <br></br>
         <br></br>
+
         {this.state.messages.friend}
+        <ul>
+        {this.state.errors.map((error, index) => {
+          return <li key={index}>{error}</li>
+        })}
+        </ul>
         <br></br>
 
           { friendId ? <AllGifts friendId={friendId} /> : 'Add a valid Name and Birthday to create a new friend' }
@@ -87,3 +98,4 @@ var FriendForm = React.createClass({
 FriendForm.propTypes = {
   friendId: React.PropTypes.number
 };
+
