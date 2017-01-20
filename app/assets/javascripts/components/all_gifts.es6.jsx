@@ -5,7 +5,7 @@ var AllGifts = React.createClass({
   },
 
   componentDidMount() {
-    if(this.props.populated) {
+    if(this.props.friendId) {
       var friendId = this.props.friendId
       $.ajax({
         url: `/api/v1/gifts/${friendId}`,
@@ -33,6 +33,7 @@ var AllGifts = React.createClass({
   render () {
     return(
       <div>
+      <h2>Gifts</h2>
         <table>
           <thead>
             <tr>

@@ -1,7 +1,7 @@
 var Gift = React.createClass({
 
   getInitialState() {
-    return { giftData: { name: '', price: 0, link: '' }, editable: this.props.editable }
+    return { giftData: { name: '', price: '', link: '' }, editable: this.props.editable }
   },
 
   componentDidMount() {

@@ -1,4 +1,9 @@
 class FriendsIndex extends React.Component {
+
+  handleAdd() {
+    window.location.href = '/friends/new'
+  }
+
   render () {
     return (
       <div>
@@ -8,6 +13,7 @@ class FriendsIndex extends React.Component {
             return <li key={friend.id}><a href={`friends/${friend.id}`}>{friend.name}</a></li>
           })}
         </ul>
+        <button onClick={this.handleAdd}>Add New Friend</button>
       </div>
     );
   }
