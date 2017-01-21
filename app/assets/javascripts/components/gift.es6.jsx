@@ -1,7 +1,7 @@
 var Gift = React.createClass({
 
   getInitialState() {
-    return { giftData: { name: '', price: '', link: '' }, editable: this.props.editable }
+    return { giftData: { name: '', price: '', link: '' }, editable: this.props.editable, errors: [] }
   },
 
   componentDidMount() {
@@ -30,8 +30,12 @@ var Gift = React.createClass({
       type: 'PUT',
       data: { gift: gift },
       success: (gift) => {
-        this.setState({ giftData: { name: gift.name, price: gift.price, link: gift.link } })
+        this.setState({ giftData: { name: gift.name, price: gift.price, link: gift.link }, errors: [] })
         this.toggleEditable();
+      },
+      error: (xhr) => {
+        var errors = JSON.parse(xhr.responseText).errors
+        this.setState({ errors: errors })
       }
     })
   },
@@ -77,6 +81,13 @@ var Gift = React.createClass({
             </td>
             <td>
               <button onClick={this.handleDelete}>Delete</button>
+            </td>
+            <td>
+            <ul>
+            {this.state.errors.map((error, index) => {
+              return <li style={{color: "red"}} key={index}>{error}</li>
+            })}
+            </ul>
             </td>
         </tr>
       );
