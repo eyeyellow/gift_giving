@@ -66,7 +66,7 @@ var Gift = React.createClass({
               <TextInput
                 name="price"
                 type="text"
-                value={this.state.giftData.price.toString()}
+                value={this.state.giftData.price ? this.state.giftData.price.toString() : ''}
                 onChange={this.onChange}/>
             </td>
             <td>
