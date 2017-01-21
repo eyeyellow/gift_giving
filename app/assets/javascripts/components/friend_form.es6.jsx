@@ -43,7 +43,6 @@ var FriendForm = React.createClass({
         type: 'POST',
         data: { friendInfo: friendInfo },
         success: (friendInfo) => {
-          console.log(friendInfo)
           this.setState({ friendInfo: friendInfo, messages: { friend: 'successfully created new friend' }, action: 'update' })
         }
       });

@@ -1,7 +1,7 @@
 var AllGifts = React.createClass({
 
   getInitialState() {
-    return { gifts: [] }
+    return { gifts: [], addGiftDisplay: false }
   },
 
   componentDidMount() {
@@ -11,7 +11,12 @@ var AllGifts = React.createClass({
         url: `/api/v1/gifts/${friendId}`,
         type: 'GET',
         success: (gifts) => {
-          this.setState({ gifts: gifts })
+          if(gifts.length) {
+            this.setState({ gifts: gifts })
+          }
+          else {
+            this.setState({ gifts: gifts, addGiftDisplay: true})
+          }
         }
       })
     }
@@ -26,8 +31,12 @@ var AllGifts = React.createClass({
     var newGifts = this.state.gifts.filter((gift) => {
       return gift.id !== giftId
     });
-
-    this.setState({ gifts: newGifts });
+    if(newGifts.length){
+      this.setState({ gifts: newGifts });
+    }
+    else {
+      this.setState({ gifts: gifts, addGiftDisplay: true})
+    }
   },
 
   render () {
@@ -56,7 +65,8 @@ var AllGifts = React.createClass({
             })}
           </tbody>
         </table>
-        <AddGift friendId={this.props.friendId}
+        <AddGift display={this.state.addGiftDisplay}
+        friendId={this.props.friendId}
         handleNewGift={this.handleNewGift} />
       </div>
     )

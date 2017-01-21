@@ -1,7 +1,13 @@
 var AddGift = React.createClass({
 
   getInitialState() {
-    return { newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: false }
+    return { newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: this.props.display }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.toggleForm()
+    }
   },
 
   toggleForm() {
@@ -33,32 +39,32 @@ var AddGift = React.createClass({
 
   render () {
     var addGiftForm = (
-    <div>
-      <TextInput
-        label="Name"
-        name="name"
-        type="text"
-        value={this.state.newGiftData.name}
-        onChange={this.onChange}/>
+      <div>
+        <TextInput
+          label="Name"
+          name="name"
+          type="text"
+          value={this.state.newGiftData.name}
+          onChange={this.onChange}/>
 
-      <TextInput
-        label="Price"
-        name="price"
-        type="text"
-        value={this.state.newGiftData.price.toString()}
-        onChange={this.onChange}/>
+        <TextInput
+          label="Price"
+          name="price"
+          type="text"
+          value={this.state.newGiftData.price.toString()}
+          onChange={this.onChange}/>
 
-      <TextInput
-        label="Link"
-        name="link"
-        type="text"
-        value={this.state.newGiftData.link}
-        onChange={this.onChange}/>
+        <TextInput
+          label="Link"
+          name="link"
+          type="text"
+          value={this.state.newGiftData.link}
+          onChange={this.onChange}/>
 
 
-      <button onClick={this.handleAdd}>Add Gift</button>
+        <button onClick={this.handleAdd}>Add Gift</button>
 
-    </div>
+      </div>
     )
     return (
       <div>
@@ -71,5 +77,6 @@ var AddGift = React.createClass({
 
 AddGift.propTypes = {
   friendId: React.PropTypes.number,
-  handleNewGift: React.PropTypes.func
+  handleNewGift: React.PropTypes.func,
+  display: React.PropTypes.bool
 };
