@@ -31,11 +31,12 @@ var AllGifts = React.createClass({
     var newGifts = this.state.gifts.filter((gift) => {
       return gift.id !== giftId
     });
-    if(newGifts.length){
-      this.setState({ gifts: newGifts });
+    if(newGifts.length) {
+      console.log(newGifts.length)
+      this.setState({ gifts: newGifts, addGiftDisplay: false });
     }
     else {
-      this.setState({ gifts: gifts, addGiftDisplay: true})
+      this.setState({ gifts: newGifts, addGiftDisplay: true})
     }
   },
 
