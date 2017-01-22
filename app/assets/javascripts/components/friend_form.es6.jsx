@@ -1,19 +1,12 @@
 var FriendForm = React.createClass({
 
   getInitialState() {
-    return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', messages: {friend: ''}, errors: [] }
+    return { friendInfo: {name: '', birthday: ''}, action: 'create', success: '', errors: [] }
   },
 
-  componentDidMount() {
-    if(this.props.friendId) {
-      var friendId = this.props.friendId
-      $.ajax({
-        url: `/api/v1/friends/${friendId}`,
-        type: 'GET',
-        success: (response) => {
-          this.setState({ friendInfo: response, action: 'update' })
-        }
-      })
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.friendId) {
+      this.setState({ friendInfo: nextProps.friendInfo, action: nextProps.action, success: nextProps.success, errors: nextProps.errors })
     }
   },
 
@@ -25,41 +18,14 @@ var FriendForm = React.createClass({
   },
 
   onSave() {
-    var friendInfo = this.state.friendInfo
-    var friendId = friendInfo.id
-    if(friendId) {
-      $.ajax({
-        url: `/api/v1/friends/${friendId}`,
-        type: 'PUT',
-        data: { friendInfo: friendInfo },
-        dataType: "json",
-        success: (response) => {
-          this.setState({ messages: { friend: 'successfully changed friend info' }, errors: [] })
-        },
-        error: (xhr) => {
-          var errors = JSON.parse(xhr.responseText).errors
-          this.setState({ errors: errors })
-        }
-      });
-    }
-    else {
-      $.ajax({
-        url: '/api/v1/friends/',
-        type: 'POST',
-        data: { friendInfo: friendInfo },
-        success: (friendInfo) => {
-          this.setState({ friendInfo: friendInfo, messages: { friend: 'successfully created new friend' }, action: 'update', errors: [] })
-        },
-        error: (xhr) => {
-          var errors = JSON.parse(xhr.responseText).errors
-          this.setState({ errors: errors })
-        }
-      });
-    }
+    var name = this.state.friendInfo.name
+    var birthday = this.state.friendInfo.birthday
+    var friend = { name: name, birthday: birthday }
+    this.props.onSave(friend)
   },
 
   render () {
-    var friendId = this.state.friendInfo.id
+    var friendId = this.props.friendId
     return (
       <div>
         <h1>Fill out the fields to {this.state.action} a friend:</h1>
@@ -83,7 +49,7 @@ var FriendForm = React.createClass({
         <br></br>
         <br></br>
 
-        {this.state.messages.friend}
+        {this.state.success}
         <ul>
         {this.state.errors.map((error, index) => {
           return <li style={{color: "red"}} key={index}>{error}</li>
@@ -91,7 +57,7 @@ var FriendForm = React.createClass({
         </ul>
         <br></br>
 
-          { friendId ? <AllGifts friendId={friendId} /> : 'Add a valid Name and Birthday to create a new friend' }
+          { friendId ? <AllGiftsContainer friendId={friendId} /> : 'Add a valid Name and Birthday to create a new friend' }
 
       </div>
     );
@@ -99,6 +65,11 @@ var FriendForm = React.createClass({
 })
 
 FriendForm.propTypes = {
-  friendId: React.PropTypes.number
+  friendId: React.PropTypes.number,
+  friendInfo: React.PropTypes.object,
+  onSave: React.PropTypes.func,
+  action: React.PropTypes.string,
+  success: React.PropTypes.string,
+  errors: React.PropTypes.array
 };
 
