@@ -45,6 +45,7 @@ var AllGiftsContainer = React.createClass({
         <AllGifts
         gifts={this.state.gifts}
         friendId={this.props.friendId}
+        addGiftDisplay={this.state.addGiftDisplay}
         handleDeleteGift={this.handleDeleteGift}
         handleNewGift={this.handleNewGift} />
       </div>
