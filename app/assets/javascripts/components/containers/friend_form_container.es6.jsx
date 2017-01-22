@@ -1,6 +1,6 @@
 var FriendFormContainer = React.createClass({
 
-getInitialState() {
+ getInitialState() {
     return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', success: '', errors: [] }
   },
 

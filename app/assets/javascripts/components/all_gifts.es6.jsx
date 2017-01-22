@@ -4,40 +4,18 @@ var AllGifts = React.createClass({
     return { gifts: [], addGiftDisplay: false }
   },
 
-  componentDidMount() {
-    if(this.props.friendId) {
-      var friendId = this.props.friendId
-      $.ajax({
-        url: `/api/v1/gifts/${friendId}`,
-        type: 'GET',
-        success: (gifts) => {
-          if(gifts.length) {
-            this.setState({ gifts: gifts })
-          }
-          else {
-            this.setState({ gifts: gifts, addGiftDisplay: true})
-          }
-        }
-      })
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      this.setState({ gifts: nextProps.gifts, addGiftDisplay: nextProps.addGiftDisplay })
     }
-  },
-
-  handleNewGift(newGiftData) {
-    var newState = this.state.gifts.concat(newGiftData)
-    this.setState({ gifts: newState })
   },
 
   handleDeleteGift(giftId) {
-    var newGifts = this.state.gifts.filter((gift) => {
-      return gift.id !== giftId
-    });
-    if(newGifts.length) {
-      console.log(newGifts.length)
-      this.setState({ gifts: newGifts, addGiftDisplay: false });
-    }
-    else {
-      this.setState({ gifts: newGifts, addGiftDisplay: true})
-    }
+    this.props.handleDeleteGift(giftId)
+  },
+
+  handleNewGift(gift) {
+    this.props.handleNewGift(gift)
   },
 
   render () {
@@ -76,5 +54,7 @@ var AllGifts = React.createClass({
 
 AllGifts.propTypes = {
   friendId: React.PropTypes.number,
-  populated: React.PropTypes.bool
+  gifts: React.PropTypes.array,
+  handleDeleteGift: React.PropTypes.func,
+  handleAddGift: React.PropTypes.func
 };
