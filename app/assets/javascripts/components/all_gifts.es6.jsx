@@ -1,15 +1,5 @@
 var AllGifts = React.createClass({
 
-  getInitialState() {
-    return { gifts: [], addGiftDisplay: false }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps) {
-      this.setState({ gifts: nextProps.gifts, addGiftDisplay: nextProps.addGiftDisplay })
-    }
-  },
-
   render () {
     return(
       <div>
@@ -23,7 +13,7 @@ var AllGifts = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {this.state.gifts.map((gift) => {
+            {this.props.gifts.map((gift) => {
               return (
                 <GiftContainer key={gift.id}
                 editable={false}
@@ -33,7 +23,7 @@ var AllGifts = React.createClass({
             })}
           </tbody>
         </table>
-        <AddGift display={this.state.addGiftDisplay}
+        <AddGift display={this.props.addGiftDisplay}
         friendId={this.props.friendId}
         handleNewGift={this.props.handleNewGift} />
       </div>
@@ -45,5 +35,6 @@ AllGifts.propTypes = {
   friendId: React.PropTypes.number,
   gifts: React.PropTypes.array,
   handleDeleteGift: React.PropTypes.func,
-  handleAddGift: React.PropTypes.func
+  handleAddGift: React.PropTypes.func,
+  addGiftDisplay: React.PropTypes.bool
 };
