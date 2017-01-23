@@ -6,10 +6,10 @@ var FriendFormContainer = React.createClass({
 
   componentDidMount() {
     if(this.props.friendId) {
-      var friendId = this.props.friendId;
+      var { friendId } = this.props;
       FriendApi.getFriendInfo(friendId)
         .success((response) => {
-          this.setState({ friendInfo: response });
+          this.setState({ friendInfo: response, formAction: 'update' });
         })
     }
   },
@@ -31,7 +31,6 @@ var FriendFormContainer = React.createClass({
     if(friend.id) {
       FriendApi.updateFriendInfo(friend)
         .then((response) => {
-          console.log(response.friend)
           this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
         })
         .fail((response) => {

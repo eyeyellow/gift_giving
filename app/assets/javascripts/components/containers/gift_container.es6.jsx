@@ -21,35 +21,25 @@ var GiftContainer = React.createClass({
   },
 
   handleEdit() {
-    var name = this.state.giftData.name
-    var price = this.state.giftData.price
-    var link = this.state.giftData.link
-    var id = this.props.gift.id
-    var gift = { name: name, price: price, link: link, id: id}
-    $.ajax({
-      url: `/api/v1/gifts/${gift.id}`,
-      type: 'PUT',
-      data: { gift: gift },
-      success: (gift) => {
-        this.setState({ giftData: { name: gift.name, price: gift.price, link: gift.link }, errors: [] })
+    var { name, price, link, id } = this.state.giftData
+    var gift = { name, price, link, id }
+    GiftApi.updateGift(gift)
+      .then((response) => {
+        this.setState({ giftData: gift, errors: [] })
         this.toggleEditable();
-      },
-      error: (xhr) => {
-        var errors = JSON.parse(xhr.responseText).errors
-        this.setState({ errors: errors })
-      }
-    })
+      })
+      .fail((response) => {
+        var errors = JSON.parse(response.responseText).errors
+        this.setState({ errors })
+      })
   },
 
   handleDelete() {
-    var id = this.props.gift.id
-    $.ajax({
-      url: `/api/v1/gifts/${id}`,
-      type: 'DELETE',
-      success: (gift) => {
+    var { id } = this.props.gift
+    GiftApi.deleteGift(id)
+      .then((response) => {
         this.props.handleDelete(id);
-      }
-    })
+      })
   },
 
   render () {

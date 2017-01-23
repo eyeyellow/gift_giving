@@ -6,36 +6,34 @@ var AllGiftsContainer = React.createClass({
 
   componentDidMount() {
     if(this.props.friendId) {
-      var friendId = this.props.friendId
-      $.ajax({
-        url: `/api/v1/gifts/${friendId}`,
-        type: 'GET',
-        success: (gifts) => {
+      var { friendId } = this.props
+      GiftApi.getFriendGifts(friendId)
+        .success((gifts) => {
           if(gifts.length) {
-            this.setState({ gifts: gifts })
+            this.setState({ gifts })
           }
           else {
-            this.setState({ gifts: gifts, addGiftDisplay: true})
+            this.setState({ gifts, addGiftDisplay: true})
           }
-        }
-      })
+        })
     }
   },
 
   handleNewGift(newGiftData) {
+    console.log(newGiftData)
     var newState = this.state.gifts.concat(newGiftData)
     this.setState({ gifts: newState })
   },
 
   handleDeleteGift(giftId) {
-    var newGifts = this.state.gifts.filter((gift) => {
+    var gifts = this.state.gifts.filter((gift) => {
       return gift.id !== giftId
     });
-    if(newGifts.length) {
-      this.setState({ gifts: newGifts, addGiftDisplay: false });
+    if(gifts.length) {
+      this.setState({ gifts, addGiftDisplay: false });
     }
     else {
-      this.setState({ gifts: newGifts, addGiftDisplay: true})
+      this.setState({ gifts, addGiftDisplay: true})
     }
   },
 
