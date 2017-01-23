@@ -17,6 +17,20 @@ var FriendFormContainer = React.createClass({
     }
   },
 
+  onChange(event) {
+    const field = event.target.name;
+    const friendInfo = this.state.friendInfo;
+    friendInfo[field] = event.target.value;
+    return this.setState({ friendInfo: friendInfo });
+  },
+
+  onSave() {
+    var name = this.state.friendInfo.name
+    var birthday = this.state.friendInfo.birthday
+    var friend = { name: name, birthday: birthday }
+    this.handleSave(friend)
+  },
+
   handleSave(friend) {
     var name = friend.name
     var birthday = friend.birthday
@@ -61,7 +75,9 @@ var FriendFormContainer = React.createClass({
           friendInfo={this.state.friendInfo}
           formAction={this.state.formAction}
           success={this.state.success}
-          errors={this.state.errors}  />
+          errors={this.state.errors}
+          onChange={this.onChange}
+          onSave={this.onSave}  />
       </div>
     );
   }
