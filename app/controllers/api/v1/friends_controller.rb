@@ -26,7 +26,7 @@ class Api::V1::FriendsController < Api::V1::BaseController
   private
 
   def friend_params
-    params.require(:friendInfo).permit(:name, :birthday)
+    params.require(:friend).permit(:name, :birthday)
   end
 
 end

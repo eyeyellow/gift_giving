@@ -1,7 +1,7 @@
 var AddGift = React.createClass({
 
   getInitialState() {
-    return { newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: this.props.display, errors: [] }
+    return { newGiftData: { name: '', price: '', link: '' }, showForm: this.props.display, errors: [] }
   },
 
   componentWillReceiveProps(nextProps) {
@@ -15,23 +15,18 @@ var AddGift = React.createClass({
   },
 
   handleAdd() {
-    var name = this.state.newGiftData.name
-    var price = this.state.newGiftData.price
-    var link = this.state.newGiftData.link
-    var friend_id = this.state.newGiftData.friendId
-    $.ajax({
-      url: '../../api/v1/gifts/',
-      type: 'POST',
-      data: { gift: { name: name, price: price, link: link, friend_id: friend_id } },
-      success: (gift) => {
-        this.props.handleNewGift(gift);
-        this.setState({ newGiftData: { name: '', price: '', link: '', friendId: this.props.friendId }, showForm: false, errors: [] })
-      },
-      error: (xhr) => {
-        var errors = JSON.parse(xhr.responseText).errors
-        this.setState({ errors: errors })
-      }
-    });
+    var { name, price, link } = this.state.newGiftData
+    var friend_id = this.props.friendId
+    var gift = { name, price, link, friend_id }
+    GiftApi.createNewGift(gift)
+      .then((response) => {
+        this.props.handleNewGift(response);
+        this.setState({ newGiftData: { name: '', price: '', link: '' }, showForm: false, errors: [] })
+      })
+      .fail((response) => {
+        var errors = JSON.parse(response.responseText).errors
+        this.setState({ errors })
+      })
   },
 
   onChange(event) {
