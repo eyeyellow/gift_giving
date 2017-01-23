@@ -1,19 +1,16 @@
 var FriendFormContainer = React.createClass({
 
  getInitialState() {
-    return { friendInfo: {name: '', birthday: ''}, formAction: 'create', success: '', errors: [] }
+    return { friendInfo: {name: '', birthday: '', id: this.props.friendId }, formAction: 'create', success: '', errors: [] }
   },
 
   componentDidMount() {
     if(this.props.friendId) {
-      var friendId = this.props.friendId
-      $.ajax({
-        url: `/api/v1/friends/${friendId}`,
-        type: 'GET',
-        success: (response) => {
-          this.setState({ friendInfo: response, formAction: 'update' })
-        }
-      })
+      var friendId = this.props.friendId;
+      FriendApi.getFriendInfo(friendId)
+        .success((response) => {
+          this.setState({ friendInfo: response });
+        })
     }
   },
 
@@ -25,45 +22,32 @@ var FriendFormContainer = React.createClass({
   },
 
   onSave() {
-    var name = this.state.friendInfo.name
-    var birthday = this.state.friendInfo.birthday
-    var friend = { name: name, birthday: birthday }
-    this.handleSave(friend)
+    var { name, birthday, id } = this.state.friendInfo;
+    var friend = { name, birthday, id };
+    this.handleSave(friend);
   },
 
   handleSave(friend) {
-    var name = friend.name
-    var birthday = friend.birthday
-    var id = this.props.friendId
-    var friendInfo = { name, birthday, id }
-    if(id) {
-      $.ajax({
-        url: `/api/v1/friends/${id}`,
-        type: 'PUT',
-        data: { friendInfo: friendInfo },
-        dataType: "json",
-        success: (response) => {
-          this.setState({ success:'successfully changed friend info', errors: [] })
-        },
-        error: (xhr) => {
-          var errors = JSON.parse(xhr.responseText).errors
+    if(friend.id) {
+      FriendApi.updateFriendInfo(friend)
+        .then((response) => {
+          console.log(response.friend)
+          this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
+        })
+        .fail((response) => {
+          var errors = JSON.parse(response.responseText).errors
           this.setState({ errors })
-        }
-      });
+        })
     }
     else {
-      $.ajax({
-        url: '/api/v1/friends/',
-        type: 'POST',
-        data: { friendInfo: friendInfo },
-        success: (friendInfo) => {
-          this.setState({ friendInfo: friendInfo, success: 'successfully created new friend', formAction: 'update', errors: [] })
-        },
-        error: (xhr) => {
-          var errors = JSON.parse(xhr.responseText).errors
-          this.setState({ errors: errors })
-        }
-      });
+      FriendApi.createNewFriend(friend)
+        .then((response) => {
+          this.setState({ friendInfo: response, success: 'successfully created new friend', formAction: 'update', errors: [] })
+        })
+        .fail((response) => {
+          var errors = JSON.parse(response.responseText).errors
+          this.setState({ errors })
+        })
     }
   },
 
@@ -71,7 +55,7 @@ var FriendFormContainer = React.createClass({
     return (
       <div>
         <FriendForm onSave={this.handleSave}
-          friendId={this.props.friendId ? this.props.friendId : this.state.friendInfo.id}
+          friendId={this.props.friendId ? this.props.friendId : this.state.friendInfo.id }
           friendInfo={this.state.friendInfo}
           formAction={this.state.formAction}
           success={this.state.success}
