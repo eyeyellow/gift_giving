@@ -1,12 +1,12 @@
 var FriendForm = React.createClass({
 
   getInitialState() {
-    return { friendInfo: {name: '', birthday: ''}, action: 'create', success: '', errors: [] }
+    return { friendInfo: {name: '', birthday: ''}, formAction: 'create', success: '', errors: [] }
   },
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.friendId) {
-      this.setState({ friendInfo: nextProps.friendInfo, action: nextProps.action, success: nextProps.success, errors: nextProps.errors })
+      this.setState({ friendInfo: nextProps.friendInfo, formAction: nextProps.formAction, success: nextProps.success, errors: nextProps.errors })
     }
   },
 
@@ -28,7 +28,7 @@ var FriendForm = React.createClass({
     var friendId = this.props.friendId
     return (
       <div>
-        <h1>Fill out the fields to {this.state.action} a friend:</h1>
+        <h1>Fill out the fields to {this.state.formAction} a friend:</h1>
 
           <TextInput
             name="name"
@@ -44,7 +44,7 @@ var FriendForm = React.createClass({
             value={this.state.friendInfo.birthday}
             onChange={this.onChange}/>
 
-          <button onClick={this.onSave}>{this.state.action}</button>
+          <button onClick={this.onSave}>{this.state.formAction}</button>
 
         <br></br>
         <br></br>

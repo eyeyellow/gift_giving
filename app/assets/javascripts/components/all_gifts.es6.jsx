@@ -10,14 +10,6 @@ var AllGifts = React.createClass({
     }
   },
 
-  handleDeleteGift(giftId) {
-    this.props.handleDeleteGift(giftId)
-  },
-
-  handleNewGift(gift) {
-    this.props.handleNewGift(gift)
-  },
-
   render () {
     return(
       <div>
@@ -33,20 +25,17 @@ var AllGifts = React.createClass({
           <tbody>
             {this.state.gifts.map((gift) => {
               return (
-                <Gift key={gift.id}
+                <GiftContainer key={gift.id}
                 editable={false}
-                giftId={gift.id}
-                name={gift.name}
-                link={gift.link}
-                price={gift.price}
-                handleDeleteGift={this.handleDeleteGift} />
+                gift={gift}
+                handleDelete={this.props.handleDeleteGift} />
               )
             })}
           </tbody>
         </table>
         <AddGift display={this.state.addGiftDisplay}
         friendId={this.props.friendId}
-        handleNewGift={this.handleNewGift} />
+        handleNewGift={this.props.handleNewGift} />
       </div>
     )
   }

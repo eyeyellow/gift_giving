@@ -1,7 +1,7 @@
 var FriendFormContainer = React.createClass({
 
  getInitialState() {
-    return { friendInfo: {name: '', birthday: '', id: this.props.friendId}, action: 'create', success: '', errors: [] }
+    return { friendInfo: {name: '', birthday: ''}, formAction: 'create', success: '', errors: [] }
   },
 
   componentDidMount() {
@@ -11,7 +11,7 @@ var FriendFormContainer = React.createClass({
         url: `/api/v1/friends/${friendId}`,
         type: 'GET',
         success: (response) => {
-          this.setState({ friendInfo: response, action: 'update' })
+          this.setState({ friendInfo: response, formAction: 'update' })
         }
       })
     }
@@ -21,7 +21,7 @@ var FriendFormContainer = React.createClass({
     var name = friend.name
     var birthday = friend.birthday
     var id = this.props.friendId
-    var friendInfo = { name: name, birthday: birthday, id: id }
+    var friendInfo = { name, birthday, id }
     if(id) {
       $.ajax({
         url: `/api/v1/friends/${id}`,
@@ -33,7 +33,7 @@ var FriendFormContainer = React.createClass({
         },
         error: (xhr) => {
           var errors = JSON.parse(xhr.responseText).errors
-          this.setState({ errors: errors })
+          this.setState({ errors })
         }
       });
     }
@@ -43,7 +43,7 @@ var FriendFormContainer = React.createClass({
         type: 'POST',
         data: { friendInfo: friendInfo },
         success: (friendInfo) => {
-          this.setState({ friendInfo: friendInfo, success: 'successfully created new friend', action: 'update', errors: [] })
+          this.setState({ friendInfo: friendInfo, success: 'successfully created new friend', formAction: 'update', errors: [] })
         },
         error: (xhr) => {
           var errors = JSON.parse(xhr.responseText).errors
@@ -59,7 +59,7 @@ var FriendFormContainer = React.createClass({
         <FriendForm onSave={this.handleSave}
           friendId={this.props.friendId ? this.props.friendId : this.state.friendInfo.id}
           friendInfo={this.state.friendInfo}
-          action={this.state.action}
+          formAction={this.state.formAction}
           success={this.state.success}
           errors={this.state.errors}  />
       </div>
