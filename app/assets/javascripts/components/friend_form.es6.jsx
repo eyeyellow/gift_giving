@@ -25,6 +25,8 @@ var FriendForm = React.createClass({
         <br></br>
         <br></br>
 
+        {/* Displays success/error messages for creating/updating friend */}
+
         {this.props.success}
         <ul>
         {this.props.errors.map((error, index) => {
@@ -33,7 +35,11 @@ var FriendForm = React.createClass({
         </ul>
         <br></br>
 
+        {/* Conditionally renders list of gifts upon successful creation of Friend */}
+
           { friendId ? <AllGiftsContainer friendId={friendId} /> : 'Add a valid Name and Birthday to create a new friend' }
+
+        <br></br>
 
         <button onClick={this.props.toFriendsIndex}>Back</button>
       </div>

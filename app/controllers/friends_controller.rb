@@ -1,12 +1,13 @@
 class FriendsController < ApplicationController
 
+  # This controller is responsible with seeding the React components for Friend views with json data from the database
+
   def index
     @friends = Friend.all
     @friends.as_json
   end
 
   def new
-    @friend = Friend.new
   end
 
   def show

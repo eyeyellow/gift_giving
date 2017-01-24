@@ -1,3 +1,9 @@
+{/*
+  The value of addGiftDisplay determines whether the AddGift form is rendered.
+  The last lines of code in componentDidMount and handleDeleteDift conditionally set the value
+  of addGiftDisplay to true for cases where the array of gifts in state are empty
+ */}
+
 var AllGiftsContainer = React.createClass({
 
   getInitialState() {
@@ -9,12 +15,8 @@ var AllGiftsContainer = React.createClass({
       var { friendId } = this.props
       GiftApi.getFriendGifts(friendId)
         .success((gifts) => {
-          if(gifts.length) {
-            this.setState({ gifts })
-          }
-          else {
-            this.setState({ gifts, addGiftDisplay: true})
-          }
+          this.setState({ gifts })
+          if(!gifts.length) this.setState({ gifts, addGiftDisplay: true})
         })
     }
   },
@@ -28,12 +30,7 @@ var AllGiftsContainer = React.createClass({
     var gifts = this.state.gifts.filter((gift) => {
       return gift.id !== giftId
     });
-    if(gifts.length) {
-      this.setState({ gifts, addGiftDisplay: false });
-    }
-    else {
-      this.setState({ gifts, addGiftDisplay: true})
-    }
+    gifts.length ? this.setState({ gifts, addGiftDisplay: false }) : this.setState({ gifts, addGiftDisplay: true})
   },
 
   render () {

@@ -1,5 +1,7 @@
 class GiftApi {
 
+// Separates out logic for Gift api calls into separate class, to be invoked in container component for Gift.
+
   static getFriendGifts(friendId) {
     return $.ajax({
         url: `/api/v1/gifts/${friendId}`,

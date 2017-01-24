@@ -1,5 +1,7 @@
 class FriendApi {
 
+// Separates out logic for Friend api calls into separate class, to be invoked in container component for Friend.
+
   static getFriendInfo(id) {
     return $.ajax({
         url: `/api/v1/friends/${id}`,

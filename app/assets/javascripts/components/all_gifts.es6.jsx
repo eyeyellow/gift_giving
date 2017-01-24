@@ -1,3 +1,8 @@
+{/*
+  handleDelete is passed up to the parent container in order to filter out the deleted item
+  so that the AllGifts' props reflect changes in the database
+ */}
+
 var AllGifts = React.createClass({
 
   render () {

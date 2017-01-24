@@ -1,5 +1,7 @@
 class Api::V1::GiftsController < Api::V1::BaseController
 
+  # This controller response with Gift information used with the ajax calls.
+
   def show
     @gifts = Gift.where(friend_id: params[:id])
     respond_with @gifts

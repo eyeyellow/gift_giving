@@ -35,10 +35,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# helps with returning serialized JSON objects
+# Helps with DRYing up code for returning serialized JSON objects from controller
 gem 'responders'
 
-# integrates React with Rails
+# Integrates React with Rails
 gem 'react-rails'
 
 group :development, :test do

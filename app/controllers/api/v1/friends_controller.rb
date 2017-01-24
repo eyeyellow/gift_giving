@@ -1,5 +1,7 @@
 class Api::V1::FriendsController < Api::V1::BaseController
 
+  # This controller response with Friend information used with the ajax calls.
+
   def show
     @friend = Friend.find(params[:id])
     respond_with @friend

@@ -1,3 +1,8 @@
+{/*
+  This is a lightweight presentational component that responds to changes in props
+  that populate the field values as state changes occur in parent components
+ */}
+
 class TextInput extends React.Component {
   render () {
     return (

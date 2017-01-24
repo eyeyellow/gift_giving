@@ -1,3 +1,11 @@
+{/*
+  State values:
+  formAction - indicates to the user whether they are creating a new friend or editing and existing one
+  success - indicates success in creating/updating a friend
+  friendInfo - stores information to display or submit for the friend
+  errors - holds messages to display for validation errors
+ */}
+
 var FriendFormContainer = React.createClass({
 
  getInitialState() {
@@ -18,7 +26,7 @@ var FriendFormContainer = React.createClass({
     const field = event.target.name;
     const friendInfo = this.state.friendInfo;
     friendInfo[field] = event.target.value;
-    return this.setState({ friendInfo: friendInfo });
+    return this.setState({ friendInfo });
   },
 
   onSave() {
