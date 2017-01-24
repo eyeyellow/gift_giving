@@ -50,6 +50,10 @@ var FriendFormContainer = React.createClass({
     }
   },
 
+  toFriendsIndex() {
+    window.location.href = '/'
+  },
+
   render () {
     return (
       <div>
@@ -60,7 +64,8 @@ var FriendFormContainer = React.createClass({
           success={this.state.success}
           errors={this.state.errors}
           onChange={this.onChange}
-          onSave={this.onSave}  />
+          onSave={this.onSave}
+          toFriendsIndex={this.toFriendsIndex}  />
       </div>
     );
   }

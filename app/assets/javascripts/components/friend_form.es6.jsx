@@ -1,7 +1,7 @@
 var FriendForm = React.createClass({
 
   render () {
-    var friendId = this.props.friendId
+    var { friendId } = this.props
     return (
       <div>
         <h1>Fill out the fields to {this.props.formAction} a friend:</h1>
@@ -35,6 +35,7 @@ var FriendForm = React.createClass({
 
           { friendId ? <AllGiftsContainer friendId={friendId} /> : 'Add a valid Name and Birthday to create a new friend' }
 
+        <button onClick={this.props.toFriendsIndex}>Back</button>
       </div>
     );
   }
@@ -45,9 +46,9 @@ FriendForm.propTypes = {
   friendInfo: React.PropTypes.object,
   onSave: React.PropTypes.func,
   onChange: React.PropTypes.func,
-  action: React.PropTypes.string,
   success: React.PropTypes.string,
   errors: React.PropTypes.array,
-  formAction: React.PropTypes.string
+  formAction: React.PropTypes.string,
+  toFriendsIndex: React.PropTypes.func
 };
 
