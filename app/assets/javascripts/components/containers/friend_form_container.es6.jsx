@@ -34,7 +34,7 @@ var FriendFormContainer = React.createClass({
           this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
         })
         .fail((response) => {
-          var errors = JSON.parse(response.responseText).errors
+          var errors = JSON.parse(response.responseText)
           this.setState({ errors })
         })
     }
@@ -44,7 +44,7 @@ var FriendFormContainer = React.createClass({
           this.setState({ friendInfo: response, success: 'successfully created new friend', formAction: 'update', errors: [] })
         })
         .fail((response) => {
-          var errors = JSON.parse(response.responseText).errors
+          var errors = JSON.parse(response.responseText)
           this.setState({ errors })
         })
     }

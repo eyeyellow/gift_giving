@@ -20,7 +20,6 @@ var AllGiftsContainer = React.createClass({
   },
 
   handleNewGift(newGiftData) {
-    console.log(newGiftData)
     var newState = this.state.gifts.concat(newGiftData)
     this.setState({ gifts: newState })
   },

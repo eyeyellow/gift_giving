@@ -24,7 +24,7 @@ var AddGift = React.createClass({
         this.setState({ newGiftData: { name: '', price: '', link: '' }, showForm: false, errors: [] })
       })
       .fail((response) => {
-        var errors = JSON.parse(response.responseText).errors
+        var errors = JSON.parse(response.responseText)
         this.setState({ errors })
       })
   },

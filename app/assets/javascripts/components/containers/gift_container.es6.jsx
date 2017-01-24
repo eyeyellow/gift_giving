@@ -29,7 +29,7 @@ var GiftContainer = React.createClass({
         this.toggleEditable();
       })
       .fail((response) => {
-        var errors = JSON.parse(response.responseText).errors
+        var errors = JSON.parse(response.responseText)
         this.setState({ errors })
       })
   },
