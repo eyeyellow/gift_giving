@@ -1,5 +1,7 @@
 class Api::V1::GiftsController < Api::V1::BaseController
 
+  # This controller response with Gift information used with the ajax calls.
+
   def show
     @gifts = Gift.where(friend_id: params[:id])
     respond_with @gifts
@@ -10,7 +12,7 @@ class Api::V1::GiftsController < Api::V1::BaseController
     if @gift.save
       respond_with :api, :v1, @gift
     else
-      render :json => { :errors => @gift.errors.full_messages }, :status => 422
+      render json: @gift.errors.full_messages, :status => 422
     end
   end
 
@@ -19,7 +21,7 @@ class Api::V1::GiftsController < Api::V1::BaseController
     if @gift.update_attributes(gift_params)
       respond_with @gift, json: @gift
     else
-      render :json => { :errors => @gift.errors.full_messages }, :status => 422
+      render json: @gift.errors.full_messages,:status => 422
     end
   end
 

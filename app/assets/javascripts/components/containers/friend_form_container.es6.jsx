@@ -1,3 +1,11 @@
+{/*
+  State values:
+  formAction - indicates to the user whether they are creating a new friend or editing and existing one
+  success - indicates success in creating/updating a friend
+  friendInfo - stores information to display or submit for the friend
+  errors - holds messages to display for validation errors
+ */}
+
 var FriendFormContainer = React.createClass({
 
  getInitialState() {
@@ -18,7 +26,7 @@ var FriendFormContainer = React.createClass({
     const field = event.target.name;
     const friendInfo = this.state.friendInfo;
     friendInfo[field] = event.target.value;
-    return this.setState({ friendInfo: friendInfo });
+    return this.setState({ friendInfo });
   },
 
   onSave() {
@@ -34,7 +42,7 @@ var FriendFormContainer = React.createClass({
           this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
         })
         .fail((response) => {
-          var errors = JSON.parse(response.responseText).errors
+          var errors = JSON.parse(response.responseText)
           this.setState({ errors })
         })
     }
@@ -44,10 +52,14 @@ var FriendFormContainer = React.createClass({
           this.setState({ friendInfo: response, success: 'successfully created new friend', formAction: 'update', errors: [] })
         })
         .fail((response) => {
-          var errors = JSON.parse(response.responseText).errors
+          var errors = JSON.parse(response.responseText)
           this.setState({ errors })
         })
     }
+  },
+
+  toFriendsIndex() {
+    window.location.href = '/'
   },
 
   render () {
@@ -60,7 +72,8 @@ var FriendFormContainer = React.createClass({
           success={this.state.success}
           errors={this.state.errors}
           onChange={this.onChange}
-          onSave={this.onSave}  />
+          onSave={this.onSave}
+          toFriendsIndex={this.toFriendsIndex}  />
       </div>
     );
   }

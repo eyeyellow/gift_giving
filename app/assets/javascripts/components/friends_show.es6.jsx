@@ -1,4 +1,9 @@
 class FriendsShow extends React.Component {
+
+  toFriendsIndex() {
+    window.location.href = '/'
+  }
+
   render () {
     return (
       <div>
@@ -26,6 +31,7 @@ class FriendsShow extends React.Component {
             })}
           </tbody>
         </table>
+        <button onClick={this.toFriendsIndex}>Back</button>
       </div>
     );
   }

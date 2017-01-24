@@ -1,3 +1,11 @@
+{/*
+  This component both handles behavior and renders data.
+
+  showForm controls whether or not this form is displayed
+  based on the criteria of whether or not the friend has any gifts
+  This functionality is passed down as a display prop from AllGiftsContainer
+ */}
+
 var AddGift = React.createClass({
 
   getInitialState() {
@@ -24,7 +32,7 @@ var AddGift = React.createClass({
         this.setState({ newGiftData: { name: '', price: '', link: '' }, showForm: false, errors: [] })
       })
       .fail((response) => {
-        var errors = JSON.parse(response.responseText).errors
+        var errors = JSON.parse(response.responseText)
         this.setState({ errors })
       })
   },

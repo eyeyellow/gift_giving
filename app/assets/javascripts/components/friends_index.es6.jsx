@@ -5,14 +5,24 @@ class FriendsIndex extends React.Component {
   }
 
   render () {
+
     return (
       <div>
         <h1>Here is a list of friends:</h1>
-        <ul>
+        <table>
+          <tbody>
           {this.props.friends.map(function(friend){
-            return <li key={friend.id}><a href={`friends/${friend.id}`}>{friend.name}</a></li>
+            return <tr key={friend.id}>
+                    <td><a href={`friends/${friend.id}`}>{friend.name}</a></td>
+                    <td>
+                      <form method="get" action={`/friends/${friend.id}/edit`}>
+                          <button type="submit">Edit</button>
+                      </form>
+                    </td>
+                  </tr>
           })}
-        </ul>
+          </tbody>
+        </table>
         <button onClick={this.handleAdd}>Add New Friend</button>
       </div>
     );

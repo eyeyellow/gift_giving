@@ -1,3 +1,8 @@
+{/*
+  Gift is initially rendered as plain text, but upon calling toggleEditable prop function,
+  the component is rendered as an editable form.
+ */}
+
 var Gift = React.createClass({
 
   render () {

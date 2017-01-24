@@ -1,3 +1,10 @@
+{/*
+  State values:
+  editable - determines if gift item in table is rendered as a form, plus allows for options of editing and deleting it
+  giftData - stores information to display or submit for the gift
+  errors - holds messages to display for validation errors
+ */}
+
 var GiftContainer = React.createClass({
 
   getInitialState() {
@@ -17,7 +24,7 @@ var GiftContainer = React.createClass({
     const field = event.target.name;
     const giftData = this.state.giftData;
     giftData[field] = event.target.value;
-    return this.setState({giftData: giftData});
+    return this.setState({ giftData });
   },
 
   handleEdit() {
@@ -29,7 +36,7 @@ var GiftContainer = React.createClass({
         this.toggleEditable();
       })
       .fail((response) => {
-        var errors = JSON.parse(response.responseText).errors
+        var errors = JSON.parse(response.responseText)
         this.setState({ errors })
       })
   },
