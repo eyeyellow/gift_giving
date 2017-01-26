@@ -12,7 +12,8 @@ class Api::V1::FriendsController < Api::V1::BaseController
     if friend.update_attributes(friend_params)
       respond_with params, json: params
     else
-      render json: friend.errors.full_messages, :status => 422
+      errors = friend.errors.full_messages.as_json
+      respond_with errors, json: { errors: errors }
     end
   end
 
@@ -21,7 +22,8 @@ class Api::V1::FriendsController < Api::V1::BaseController
     if @friend.save
       respond_with :api, :v1, @friend
     else
-      render json: @friend.errors.full_messages, :status => 422
+      errors = @friend.errors.full_messages.as_json
+      respond_with errors, json: { errors: errors }
     end
   end
 

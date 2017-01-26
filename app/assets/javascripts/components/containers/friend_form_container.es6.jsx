@@ -39,21 +39,25 @@ var FriendFormContainer = React.createClass({
     if(friend.id) {
       FriendApi.updateFriendInfo(friend)
         .then((response) => {
-          this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
-        })
-        .fail((response) => {
-          var errors = JSON.parse(response.responseText)
-          this.setState({ errors })
+          if(response.errors) {
+            var { errors } = response;
+            this.setState({ errors })
+          }
+          else {
+            this.setState({ friendInfo: response.friend, success:'successfully changed friend info', errors: [] })
+          }
         })
     }
     else {
       FriendApi.createNewFriend(friend)
         .then((response) => {
+          if(response.errors) {
+            var { errors } = response;
+            this.setState({ errors })
+          }
+          else {
           this.setState({ friendInfo: response, success: 'successfully created new friend', formAction: 'update', errors: [] })
-        })
-        .fail((response) => {
-          var errors = JSON.parse(response.responseText)
-          this.setState({ errors })
+          }
         })
     }
   },
