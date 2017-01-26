@@ -12,7 +12,8 @@ class Api::V1::GiftsController < Api::V1::BaseController
     if @gift.save
       respond_with :api, :v1, @gift
     else
-      render json: @gift.errors.full_messages, :status => 422
+      errors = @gift.errors.full_messages.as_json
+      respond_with errors, json: { errors: errors }
     end
   end
 
@@ -21,7 +22,8 @@ class Api::V1::GiftsController < Api::V1::BaseController
     if @gift.update_attributes(gift_params)
       respond_with @gift, json: @gift
     else
-      render json: @gift.errors.full_messages,:status => 422
+      errors = @gift.errors.full_messages.as_json
+      respond_with errors, json: { errors: errors }
     end
   end
 
