@@ -32,13 +32,15 @@ var GiftContainer = React.createClass({
     var gift = { name, price, link, id }
     GiftApi.updateGift(gift)
       .then((response) => {
-        this.setState({ giftData: gift, errors: [] })
-        this.toggleEditable();
-      })
-      .fail((response) => {
-        var errors = JSON.parse(response.responseText)
-        this.setState({ errors })
-      })
+        if(response.errors) {
+          var { errors } = response;
+          this.setState({ errors })
+        }
+        else {
+          this.setState({ giftData: gift, errors: [] })
+          this.toggleEditable();
+        }
+    })
   },
 
   handleDelete() {

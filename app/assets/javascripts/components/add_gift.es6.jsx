@@ -28,14 +28,17 @@ var AddGift = React.createClass({
     var gift = { name, price, link, friend_id }
     GiftApi.createNewGift(gift)
       .then((response) => {
-        this.props.handleNewGift(response);
-        this.setState({ newGiftData: { name: '', price: '', link: '' }, showForm: false, errors: [] })
-      })
-      .fail((response) => {
-        var errors = JSON.parse(response.responseText)
-        this.setState({ errors })
-      })
+        if(response.errors) {
+          var { errors } = response;
+          this.setState({ errors })
+        }
+        else {
+          this.props.handleNewGift(response);
+          this.setState({ newGiftData: { name: '', price: '', link: '' }, showForm: false, errors: [] })
+        }
+    })
   },
+
 
   onChange(event) {
     const field = event.target.name;
