@@ -46,6 +46,9 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails'
+
+  # Browser interaction feature specs
+  gem 'capybara'
 end
 
 group :development do
