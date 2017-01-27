@@ -49,6 +49,9 @@ group :development, :test do
 
   # Browser interaction feature specs
   gem 'capybara'
+
+  # PhantomJS headless driver for capybara js tests
+  gem 'poltergeist'
 end
 
 group :development do
