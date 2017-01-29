@@ -41,6 +41,9 @@ gem 'responders'
 # Integrates React with Rails
 gem 'react-rails'
 
+# .es6 support
+gem 'sprockets-es6'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
