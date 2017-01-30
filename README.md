@@ -19,6 +19,12 @@ Run the following commands to get started:
 
 `rails db:create db:migrate`
 
+## Testing
+First, add phantomjs ~> 2 to your path. Then, run rspec:
+```shell
+$ bundle exec rspec
+```
+
 ## Features
 
 * There are four main views for friends (new, show, edit, and index), each rendered by a separate React component. Two of the views (new and edit) use the same component (FriendForm) and conditionally render different sub-components based on if user and gift information is successfully saved to the database.
