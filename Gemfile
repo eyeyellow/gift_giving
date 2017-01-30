@@ -55,6 +55,9 @@ group :development, :test do
 
   # PhantomJS headless driver for capybara js tests
   gem 'poltergeist'
+
+  # Clean database around tests
+  gem 'database_cleaner'
 end
 
 group :development do
