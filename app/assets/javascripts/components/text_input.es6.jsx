@@ -10,6 +10,7 @@ class TextInput extends React.Component {
         <label htmlFor={this.props.name}>{this.props.label}</label>
         <div>
           <input
+            id={this.props.name}
             type={this.props.type}
             name={this.props.name}
             placeholder={this.props.placeholder}
