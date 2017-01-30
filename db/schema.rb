@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170118152611) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "friends", force: :cascade do |t|
     t.string   "name"
     t.string   "birthday"
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20170118152611) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "friend_id"
-    t.index ["friend_id"], name: "index_gifts_on_friend_id"
+    t.index ["friend_id"], name: "index_gifts_on_friend_id", using: :btree
   end
 
 end
